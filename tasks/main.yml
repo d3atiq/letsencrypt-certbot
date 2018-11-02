@@ -1,0 +1,28 @@
+---
+# tasks file for letsencrypt-certbot
+
+- name: Add Certbot repository
+  become: true
+  apt_repository:
+    repo: ppa:certbot/certbot
+    state: present
+
+- name: Update apt cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install Certbot apt package
+  become: true
+  apt:
+    name: certbot
+    state: present
+
+- name: Issue certificate
+  become: true
+  shell: certbot certonly --standalone --preferred-channelges http -d "{{ ssl.server }}"
+
+- name: Enable renewals
+  become: true
+  shell: certbot renew --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80"
+
