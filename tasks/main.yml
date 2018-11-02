@@ -20,7 +20,7 @@
 
 - name: Issue certificate
   become: true
-  shell: certbot certonly --standalone --preferred-channelges http -d "{{ ssl.server }}"
+  shell: certbot certonly --standalone --preferred-channelges http -d "{{ letsencrypt.domain }}"
 
 - name: Enable renewals
   become: true
