@@ -30,4 +30,3 @@
 - name: Enable renewals
   become: true
   shell: certbot renew --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80"
-
