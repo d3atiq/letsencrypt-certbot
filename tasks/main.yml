@@ -1,6 +1,11 @@
 ---
 # tasks file for letsencrypt-certbot
 
+- name: Add Certbot repository key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 75BCA694
+ 
 - name: Add Certbot repository
   become: true
   apt_repository:
