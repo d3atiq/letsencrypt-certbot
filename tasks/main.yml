@@ -25,7 +25,7 @@
 
 - name: Issue certificate
   become: true
-  shell: certbot certonly --standalone --preferred-challenges http -d "{{ letsencrypt.domain }}" --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80"
+  shell: certbot certonly -n --agree-tos --email "{{ letsencrypt.email }}" --standalone --preferred-challenges http -d "{{ letsencrypt.domain }}" --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80"
 
 - name: Enable renewals
   become: true
