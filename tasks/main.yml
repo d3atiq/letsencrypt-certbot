@@ -25,7 +25,7 @@
 
 - name: Issue certificate
   become: true
-  shell: certbot certonly --standalone --preferred-channelges http -d "{{ letsencrypt.domain }}"
+  shell: certbot certonly --standalone --preferred-challenges http -d "{{ letsencrypt.domain }}"
 
 - name: Enable renewals
   become: true
