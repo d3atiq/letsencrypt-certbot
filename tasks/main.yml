@@ -31,8 +31,8 @@
 
 - name: Issue certificate
   become: true
-  shell: certbot certonly -n --agree-tos --rsa-key-size 4096 --email "{{ letsencrypt.email }}" --standalone --preferred-challenges http -d "{{ letsencrypt.domain }}" --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+r /etc/letsencrypt"
+  shell: certbot certonly -n --agree-tos --rsa-key-size 4096 --email "{{ letsencrypt.email }}" --standalone --preferred-challenges http -d "{{ letsencrypt.domain }}" --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+rX /etc/letsencrypt"
 
 - name: Enable renewals
   become: true
-  shell: certbot renew --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+r /etc/letsencrypt"
+  shell: certbot renew --pre-hook "ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+rX /etc/letsencrypt"
