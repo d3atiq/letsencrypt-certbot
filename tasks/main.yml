@@ -1,10 +1,28 @@
 ---
 # tasks file for letsencrypt-certbot
 
-- name: Add Certbot repository key
-  apt_key:
-    keyserver: keyserver.ubuntu.com
-    id: 75BCA694
+- name: Update apt cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install Certbot apt package
+  become: true
+  apt:
+    name: software-properties-common
+    state: present
+
+#- name: Add Certbot repository key
+#  become: true
+#  apt_key:
+#    keyserver: keyserver.ubuntu.com
+#    id: 75BCA694
+
+- name: Add universe repository
+  become: true
+  apt_repository:
+    repo: universe
+    state: present
  
 - name: Add Certbot repository
   become: true
