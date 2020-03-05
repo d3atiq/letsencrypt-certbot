@@ -43,9 +43,9 @@
 
 - name: Issue certificate
   become: true
-  shell: certbot certonly -n --agree-tos --rsa-key-size "{{ letsencrypt.keysize }}" --email "{{ letsencrypt.email }}" --standalone --preferred-challenges http -d "{{ item }}" --pre-hook "{{ certbot.prehook }}; ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+rX /etc/letsencrypt; {{ certbot.posthook }}"
+  shell: certbot certonly -n --agree-tos --rsa-key-size "{{ letsencrypt.keysize }}" --email "{{ letsencrypt.email }}" --standalone --preferred-challenges http -d "{{ item }}" --pre-hook "{% if certbot.prehook is defined %}{{ certbot.prehook }}; {% endif %} ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+rX /etc/letsencrypt {% if certbot.posthook is defined %}; {{ certbot.posthook }}{% endif %}"
   with_items: "{{ letsencrypt.domain }}"
 
 - name: Enable renewals
   become: true
-  shell: certbot renew --pre-hook "{{ certbot.prehook }}; ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+rX /etc/letsencrypt; {{ certbot.posthook }}"
+  shell: certbot renew --pre-hook "{% if certbot.prehook is defined %}{{ certbot.prehook }}; {% endif %} ufw allow 80" --post-hook "ufw delete allow 80; chgrp -R ssl-cert /etc/letsencrypt && chmod -R g+rX /etc/letsencrypt {% if certbot.posthook is defined %}; {{ certbot.posthook }}{% endif %}"
