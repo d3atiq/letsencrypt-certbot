@@ -48,6 +48,7 @@
     groups: ssl-cert
     append: yes
   with_items: "{{ letsencrypt.user }}"
+  when: letsencrypt.user is defined
 
 - name: Issue certificate
   become: true
